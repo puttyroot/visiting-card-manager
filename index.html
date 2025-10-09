@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visiting Card Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<header>
+  <h1>📇 Visiting Card Manager</h1>
+</header>
+
+<form id="visitingForm">
+
+  <label>আপলোডের তারিখ:</label>
+  <input type="date" id="uploadDate">
+
+  <label>বিভাগ:</label>
+  <select id="category">
+    <option value="">-- বিভাগ নির্বাচন করুন --</option>
+    <option value="ব্যক্তিগত">ব্যক্তিগত</option>
+    <option value="ব্যবসায়িক">ব্যবসায়িক</option>
+    <option value="আনসার ও ভিডিপি">আনসার ও ভিডিপি</option>
+    <option value="অন্যান্য">অন্যান্য</option>
+  </select>
+
+  <label>মোবাইল নম্বর-১:</label>
+  <input type="tel" id="mobile1" placeholder="01XXXXXXXXX">
+
+  <label>মোবাইল নম্বর-২:</label>
+  <input type="tel" id="mobile2" placeholder="ঐচ্ছিক">
+
+  <label>মোবাইল নম্বর-৩:</label>
+  <input type="tel" id="mobile3" placeholder="ঐচ্ছিক">
+
+  <label>মোবাইল নম্বর-৪:</label>
+  <input type="tel" id="mobile4" placeholder="ঐচ্ছিক">
+
+  <label>মন্তব্য:</label>
+  <textarea id="comment" rows="4" placeholder="বিস্তারিত লিখুন..."></textarea>
+
+  <fieldset>
+    <legend>📂 আপলোড ফাইলঃ</legend>
+
+    <label>আপলোড ফাইল-১:</label>
+    <input type="file" id="file1">
+
+    <label>আপলোড ফাইল-২:</label>
+    <input type="file" id="file2">
+
+    <label>আপলোড ফাইল-৩:</label>
+    <input type="file" id="file3">
+
+    <label>আপলোড ফাইল-৪:</label>
+    <input type="file" id="file4">
+
+    <label>আপলোড ফাইল-৫:</label>
+    <input type="file" id="file5">
+
+    <label>আপলোড ফাইল-৬:</label>
+    <input type="file" id="file6">
+
+    <label>আপলোড ফাইল-৭:</label>
+    <input type="file" id="file7">
+
+    <label>আপলোড ফাইল-৮:</label>
+    <input type="file" id="file8">
+
+    <label>আপলোড ফাইল-৯:</label>
+    <input type="file" id="file9">
+
+    <label>আপলোড ফাইল-১০:</label>
+    <input type="file" id="file10">
+  </fieldset>
+
+  <button type="submit">সাবমিট</button>
+</form>
+
+<!-- Loading -->
+<div id="loading" class="loading" style="display:none;">
+  <div class="spinner"></div>
+  <p>ডেটা প্রসেসিং হচ্ছে...</p>
+</div>
+
+<script src="visitingScript.js"></script>
+</body>
+</html>
