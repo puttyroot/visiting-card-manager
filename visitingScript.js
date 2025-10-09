@@ -45,6 +45,7 @@ form.addEventListener("submit", async (e) => {
   const data = {
     uploadDate: formatDate(uploadDateField.value),
     category: document.getElementById("category").value,
+    personOrOrg: document.getElementById("personOrOrg").value,
     mobile1: document.getElementById("mobile1").value,
     mobile2: document.getElementById("mobile2").value,
     mobile3: document.getElementById("mobile3").value,
@@ -55,6 +56,7 @@ form.addEventListener("submit", async (e) => {
   const csvLine = [
     data.uploadDate,
     data.category,
+    data.personOrOrg,
     data.mobile1,
     data.mobile2,
     data.mobile3,
@@ -63,9 +65,10 @@ form.addEventListener("submit", async (e) => {
   ].map(v => `"${v}"`).join(",");
 
   const textMessage =
-    `📇 Visiting Card Manager\n\n` +
+    `📇 Visiting Card & Public Contacts\n\n` +
     `📅 আপলোডের তারিখ: ${data.uploadDate}\n` +
     `🏷️ বিভাগ: ${data.category}\n` +
+    `👤 প্রতিষ্ঠান/ব্যক্তি: ${data.personOrOrg}\n` +
     `📞 মোবাইল-১: ${data.mobile1}\n` +
     `📞 মোবাইল-২: ${data.mobile2}\n` +
     `📞 মোবাইল-৩: ${data.mobile3}\n` +
