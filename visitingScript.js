@@ -30,7 +30,7 @@ async function sendFile(file) {
   try {
     await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument`, {
       method: "POST",
-      body: formData
+      body: formData,
     });
   } catch (err) {
     console.error("❌ File Upload Error:", err);
@@ -44,13 +44,16 @@ form.addEventListener("submit", async (e) => {
 
   const data = {
     uploadDate: formatDate(uploadDateField.value),
-    category: document.getElementById("category").value,
-    personOrOrg: document.getElementById("personOrOrg").value,
-    mobile1: document.getElementById("mobile1").value,
-    mobile2: document.getElementById("mobile2").value,
-    mobile3: document.getElementById("mobile3").value,
-    mobile4: document.getElementById("mobile4").value,
-    comment: document.getElementById("comment").value
+    category: document.getElementById("category").value || "—",
+    personOrOrg: document.getElementById("personOrOrg").value || "—",
+    mobile1: document.getElementById("mobile1").value || "—",
+    mobile2: document.getElementById("mobile2").value || "—",
+    mobile3: document.getElementById("mobile3").value || "—",
+    mobile4: document.getElementById("mobile4").value || "—",
+    email1: document.getElementById("email1").value || "—",
+    email2: document.getElementById("email2").value || "—",
+    location: document.getElementById("location").value || "—",
+    comment: document.getElementById("comment").value || "—",
   };
 
   const csvLine = [
@@ -61,30 +64,53 @@ form.addEventListener("submit", async (e) => {
     data.mobile2,
     data.mobile3,
     data.mobile4,
-    data.comment
-  ].map(v => `"${v}"`).join(",");
+    data.email1,
+    data.email2,
+    data.location,
+    data.comment,
+  ]
+    .map((v) => `"${v}"`)
+    .join(",");
 
-  const textMessage =
-    `📇 Visiting Card & Public Contacts\n\n` +
-    `📅 আপলোডের তারিখ: ${data.uploadDate}\n` +
-    `🏷️ বিভাগ: ${data.category}\n` +
-    `👤 প্রতিষ্ঠান/ব্যক্তি: ${data.personOrOrg}\n` +
-    `📞 মোবাইল-১: ${data.mobile1}\n` +
-    `📞 মোবাইল-২: ${data.mobile2}\n` +
-    `📞 মোবাইল-৩: ${data.mobile3}\n` +
-    `📞 মোবাইল-৪: ${data.mobile4}\n` +
-    `📝 মন্তব্য:\n${data.comment}\n\n` +
-    `📊 CSV Data:\n${csvLine}`;
+  // ✅ টেলিগ্রামে পুরো মেসেজ পাঠানোর আগে এনকোডিং করা হলো
+  const textMessage = 
+`📇 *Visiting Card & Public Contacts*  
+
+📅 *আপলোডের তারিখ:* ${data.uploadDate}  
+🏷️ *বিভাগ:* ${data.category}  
+👤 *প্রতিষ্ঠান/ব্যক্তি:* ${data.personOrOrg}  
+
+📞 *মোবাইল নম্বরসমূহ:*  
+📞 মোবাইল-১: ${data.mobile1}  
+📞 মোবাইল-২: ${data.mobile2}  
+📞 মোবাইল-৩: ${data.mobile3}  
+📞 মোবাইল-৪: ${data.mobile4}  
+
+📧 *ইমেল:*  
+📧 ই-মেইল-১: ${data.email1}  
+📧 ই-মেইল-২: ${data.email2}  
+
+📍 *লোকেশন:* ${data.location}  
+
+📝 *মন্তব্য:*  
+${data.comment}  
+
+📊 CSV Data:  
+${csvLine}`;
 
   try {
-    // === Send text ===
+    // ✅ Send Text Message (use parse_mode for formatting)
     await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: textMessage })
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: textMessage,
+        parse_mode: "Markdown",
+      }),
     });
 
-    // === Upload up to 10 files ===
+    // ✅ Upload up to 10 files
     for (let i = 1; i <= 10; i++) {
       const fileInput = document.getElementById(`file${i}`);
       if (fileInput && fileInput.files.length > 0) {
